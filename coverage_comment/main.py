@@ -18,7 +18,7 @@ from coverage_comment import (
 
 
 def main():
-    logging.basicConfig(level="INFO")
+    logging.basicConfig(level="DEBUG")
 
     log.info("Starting action")
     config = settings.Config.from_environ(environ=os.environ)
