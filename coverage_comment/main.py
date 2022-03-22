@@ -22,8 +22,9 @@ def main():
     log.info("log level set to DEBUG")
     log.debug("log level set to DEBUG")
 
-    log.info("Starting action 2")
+    log.info("Starting action 3")
     config = settings.Config.from_environ(environ=os.environ)
+    config.GITHUB_BASE_REF = "master"
     if config.VERBOSE:
         logging.getLogger().setLevel("DEBUG")
         log.debug(f"Settings: {config}")
