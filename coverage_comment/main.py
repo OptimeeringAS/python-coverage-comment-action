@@ -22,7 +22,7 @@ def main():
     log.info("log level set to DEBUG")
     log.debug("log level set to DEBUG")
 
-    log.info("Starting action")
+    log.info("Starting action 2")
     config = settings.Config.from_environ(environ=os.environ)
     if config.VERBOSE:
         logging.getLogger().setLevel("DEBUG")
@@ -56,6 +56,7 @@ def action(
     log.debug(f"Operating on {config.GITHUB_REF}")
 
     event_name = config.GITHUB_EVENT_NAME
+    log.info(f"event_name = {event_name}")
     if event_name not in {"pull_request", "push", "workflow_run"}:
         log.error(
             'This action has only been designed to work for "pull_request", "branch" '
