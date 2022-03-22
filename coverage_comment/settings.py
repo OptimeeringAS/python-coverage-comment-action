@@ -21,7 +21,7 @@ def path_below(path_str: str) -> pathlib.Path:
 class Config:
     """This object defines the environment variables"""
 
-    GITHUB_BASE_REF: str
+    GITHUB_BASE_REF: str = "master"
     GITHUB_TOKEN: str = dataclasses.field(repr=False)
     GITHUB_REPOSITORY: str
     GITHUB_REF: str
