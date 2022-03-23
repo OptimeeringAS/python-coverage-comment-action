@@ -57,7 +57,7 @@ def action(
     log.debug(f"Operating on {config.GITHUB_REF}")
 
     event_name = config.GITHUB_EVENT_NAME
-    event_name = "pull"
+    event_name = "pull_request"
     log.info(f"event_name = {event_name}")
     if event_name not in {"pull_request", "push", "workflow_run"}:
         log.error(
