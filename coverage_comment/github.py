@@ -121,8 +121,9 @@ def post_comment(
     issue_comments_path = github.repos(repository).issues(pr_number).comments
     comments_path = github.repos(repository).issues.comments
 
-    print(issue_comments_path)
-    print(comments_path)
+    import logging
+    logging.info(issue_comments_path)
+    logging.info(comments_path)
     for comment in issue_comments_path.get():
         if comment.user.login == me and marker in comment.body:
             log.info("Update previous comment")
