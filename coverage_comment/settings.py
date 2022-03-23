@@ -69,7 +69,7 @@ class Config:
     @property
     def GITHUB_PR_NUMBER(self) -> int | None:
         # "refs/pull/2/merge"
-        if "pull" in self.GITHUB_REF:
+        if "/pull/" in self.GITHUB_REF:
             return int(self.GITHUB_REF.split("/")[2])
         return None
 
