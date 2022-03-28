@@ -63,7 +63,7 @@ def get_file_contents(
     repository: str,
     filename: pathlib.Path,
     git: subprocess.Git,
-) -> str | None
+) -> str | None:
 
     with tempfile.TemporaryDirectory() as dir_path:
         dir = pathlib.Path(dir_path)
