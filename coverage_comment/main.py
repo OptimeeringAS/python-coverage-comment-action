@@ -234,13 +234,12 @@ def save_badge(
         git=git,
     )
     url = wiki.get_wiki_file_url(
-        github_token=config.GITHUB_TOKEN,
         repository=config.GITHUB_REPOSITORY,
         filename=config.BADGE_FILENAME
     )
 
     badge_url = badge.get_badge_shield_url(json_url=url)
-    #log.info(f"Badge JSON stored at {url}")
-    #log.info(f"Badge URL: {badge_url}")
+    log.info(f"Badge JSON stored at {url}")
+    log.info(f"Badge URL: {badge_url}")
 
     return 0
