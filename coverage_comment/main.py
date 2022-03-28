@@ -101,6 +101,7 @@ def generate_comment(
         base_ref=config.GITHUB_BASE_REF
     )
     previous_coverage_data_file = wiki.get_file_contents(
+        github_token=config.GITHUB_TOKEN,
         session=http_session,
         repository=config.GITHUB_REPOSITORY,
         filename=config.BADGE_FILENAME,
@@ -233,11 +234,13 @@ def save_badge(
         git=git,
     )
     url = wiki.get_wiki_file_url(
-        repository=config.GITHUB_REPOSITORY, filename=config.BADGE_FILENAME
+        github_token=config.GITHUB_TOKEN,
+        repository=config.GITHUB_REPOSITORY,
+        filename=config.BADGE_FILENAME
     )
 
     badge_url = badge.get_badge_shield_url(json_url=url)
-    log.info(f"Badge JSON stored at {url}")
-    log.info(f"Badge URL: {badge_url}")
+    #log.info(f"Badge JSON stored at {url}")
+    #log.info(f"Badge URL: {badge_url}")
 
     return 0

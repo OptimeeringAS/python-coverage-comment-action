@@ -7,7 +7,7 @@ from coverage_comment import log, subprocess
 
 #WIKI_FILE_URL = "https://raw.githubusercontent.com/wiki/{repository}/{filename}"
 # Use direct link so that private repositories work too
-WIKI_FILE_URL = "https://github.com/{repository}/wiki/{filename}"
+
 GIT_CONFIG_EMAIL = "python-coverage-comment-action"
 GIT_CONFIG_NAME = "python-coverage-comment-action"
 GIT_COMMIT_MESSAGE = "Update badge"
@@ -58,13 +58,14 @@ def upload_file(
 
 
 def get_file_contents(
+    github_token: str,
     session: httpx.Client,
     repository: str,
     filename: pathlib.Path,
 ) -> str | None:
     try:
         response = session.get(
-            get_wiki_file_url(repository=repository, filename=filename)
+            get_wiki_file_url(github_token=github_token, repository=repository, filename=filename)
         )
         response.raise_for_status()
         return response.text
@@ -74,5 +75,6 @@ def get_file_contents(
         return None
 
 
-def get_wiki_file_url(repository: str, filename: pathlib.Path) -> str:
+def get_wiki_file_url(github_token: str, repository: str, filename: pathlib.Path) -> str:
+    WIKI_FILE_URL = "https://x-access-token:{github_token}github.com/{repository}/wiki/{filename}"
     return WIKI_FILE_URL.format(repository=repository, filename=filename)
