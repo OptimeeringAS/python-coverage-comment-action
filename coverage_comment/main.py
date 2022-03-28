@@ -20,7 +20,7 @@ from coverage_comment import (
 def main():
     logging.basicConfig(level="INFO")
 
-    log.info("Starting action")
+    log.info("Starting action - test1")
     config = settings.Config.from_environ(environ=os.environ)
     if config.VERBOSE:
         logging.getLogger().setLevel("DEBUG")
