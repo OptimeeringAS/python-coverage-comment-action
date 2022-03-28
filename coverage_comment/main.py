@@ -18,13 +18,10 @@ from coverage_comment import (
 
 
 def main():
-    logging.basicConfig(level="DEBUG")
-    log.info("log level set to DEBUG")
-    log.debug("log level set to DEBUG")
+    logging.basicConfig(level="INFO")
 
-    log.info("Starting action 3")
+    log.info("Starting action")
     config = settings.Config.from_environ(environ=os.environ)
-    config.GITHUB_BASE_REF = "master"
     if config.VERBOSE:
         logging.getLogger().setLevel("DEBUG")
         log.debug(f"Settings: {config}")
@@ -57,8 +54,6 @@ def action(
     log.debug(f"Operating on {config.GITHUB_REF}")
 
     event_name = config.GITHUB_EVENT_NAME
-    event_name = "pull_request"
-    log.info(f"event_name = {event_name}")
     if event_name not in {"pull_request", "push", "workflow_run"}:
         log.error(
             'This action has only been designed to work for "pull_request", "branch" '
@@ -70,8 +65,7 @@ def action(
 
     if event_name in {"pull_request", "push"}:
         coverage = coverage_module.get_coverage_info(merge=config.MERGE_COVERAGE_FILES)
-        if True:
-        #if event_name == "pull_request":
+        if event_name == "pull_request":
             return generate_comment(
                 config=config,
                 coverage=coverage,
