@@ -76,5 +76,5 @@ def get_file_contents(
 
 
 def get_wiki_file_url(github_token: str, repository: str, filename: pathlib.Path) -> str:
-    WIKI_FILE_URL = "https://x-access-token:{github_token}github.com/{repository}/wiki/{filename}"
-    return WIKI_FILE_URL.format(repository=repository, filename=filename)
+    return f"https://x-access-token:{github_token}github.com/{repository}/wiki/{filename}"
+    #return WIKI_FILE_URL.format(repository=repository, filename=filename)
