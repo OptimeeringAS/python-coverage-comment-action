@@ -31,13 +31,13 @@ def main():
         follow_redirects=True,
         headers={"Authorization": f"token {config.GITHUB_TOKEN}"},
     )
-    http_session = httpx.Client()
+    #http_session = httpx.Client()
     git = subprocess.Git()
 
     exit_code = action(
         config=config,
         github_session=github_session,
-        http_session=http_session,
+        #http_session=http_session,
         git=git,
     )
 
@@ -48,7 +48,7 @@ def main():
 def action(
     config: settings.Config,
     github_session: httpx.Client,
-    http_session: httpx.Client,
+    #http_session: httpx.Client,
     git: subprocess.Git,
 ):
     log.debug(f"Operating on {config.GITHUB_REF}")
@@ -70,7 +70,8 @@ def action(
                 config=config,
                 coverage=coverage,
                 github_session=github_session,
-                http_session=http_session,
+                #http_session=http_session,
+                git=git,
             )
         else:
             # event_name == "push"
@@ -93,7 +94,8 @@ def generate_comment(
     config: settings.Config,
     coverage: coverage_module.Coverage,
     github_session: httpx.Client,
-    http_session: httpx.Client,
+    #http_session: httpx.Client,
+    git: subprocess.Git,
 ):
     log.info("Generating comment for PR")
 
@@ -101,9 +103,10 @@ def generate_comment(
         base_ref=config.GITHUB_BASE_REF
     )
     previous_coverage_data_file = wiki.get_file_contents(
-        session=http_session,
+        github_token=config.GITHUB_TOKEN,
         repository=config.GITHUB_REPOSITORY,
         filename=config.BADGE_FILENAME,
+        git=git,
     )
     previous_coverage = None
     if previous_coverage_data_file:
