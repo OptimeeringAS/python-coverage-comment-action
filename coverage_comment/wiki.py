@@ -5,7 +5,9 @@ import httpx
 
 from coverage_comment import log, subprocess
 
-WIKI_FILE_URL = "https://raw.githubusercontent.com/wiki/{repository}/{filename}"
+#WIKI_FILE_URL = "https://raw.githubusercontent.com/wiki/{repository}/{filename}"
+# Use direct link so that private repositories work too
+WIKI_FILE_URL = "https://github.com/{repository}/wiki/{filename}"
 GIT_CONFIG_EMAIL = "python-coverage-comment-action"
 GIT_CONFIG_NAME = "python-coverage-comment-action"
 GIT_COMMIT_MESSAGE = "Update badge"
