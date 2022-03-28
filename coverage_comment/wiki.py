@@ -60,23 +60,42 @@ def upload_file(
 
 def get_file_contents(
     github_token: str,
-    session: httpx.Client,
     repository: str,
     filename: pathlib.Path,
-) -> str | None:
-    try:
-        headers = {'x-access-token': github_token}
-        response = session.get(
-            get_wiki_file_url(repository=repository, filename=filename), headers=headers
+    git: subprocess.Git,
+) -> str | None
+
+    with tempfile.TemporaryDirectory() as dir_path:
+        dir = pathlib.Path(dir_path)
+        git.cwd = dir
+
+        git.clone(
+            f"https://x-access-token:{github_token}@github.com/{repository}.wiki.git",
+            ".",
         )
-        response.raise_for_status()
-        return response.text
-    except httpx.HTTPError:
-        log.warning("Previous coverage results not found, cannot report on evolution.")
-        log.debug("Exception while getting previous coverage data", exc_info=True)
-        return None
+        #(dir / filename).write_text(contents)
+        #git.add(str(filename))
+        file_contents = (dir / filename).read_text()
+        log.info("'%s' contents: %s" % (filename, file_contents))
+        return file_contents
+
+
+#def get_file_contents(
+#    session: httpx.Client,
+#    repository: str,
+#    filename: pathlib.Path,
+#) -> str | None:
+#    try:
+#        response = session.get(
+#            get_wiki_file_url(repository=repository, filename=filename)
+#        )
+#        response.raise_for_status()
+#        return response.text
+#    except httpx.HTTPError:
+#        log.warning("Previous coverage results not found, cannot report on evolution.")
+#        log.debug("Exception while getting previous coverage data", exc_info=True)
+#        return None
 
 
 def get_wiki_file_url(repository: str, filename: pathlib.Path) -> str:
-    #return f"https://x-access-token:{github_token}github.com/{repository}/wiki/{filename}"
     return WIKI_FILE_URL.format(repository=repository, filename=filename)

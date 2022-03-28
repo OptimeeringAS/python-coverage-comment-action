@@ -101,7 +101,6 @@ def generate_comment(
         base_ref=config.GITHUB_BASE_REF
     )
     previous_coverage_data_file = wiki.get_file_contents(
-        github_token=config.GITHUB_TOKEN,
         session=http_session,
         repository=config.GITHUB_REPOSITORY,
         filename=config.BADGE_FILENAME,
