@@ -64,7 +64,7 @@ outputs:
 runs:
   using: docker
   #image: Dockerfile
-  image: docker://OptimeeringAS/python-coverage-comment-action:latest
+  image: docker://optimeeringas/python-coverage-comment-action:latest
   env:
     GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
     GITHUB_PR_RUN_ID: ${{ inputs.GITHUB_PR_RUN_ID }}
