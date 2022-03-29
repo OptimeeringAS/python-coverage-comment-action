@@ -8,7 +8,7 @@ def compute_badge(
     minimum_green: float,  # 0.0 < x < 100.0
     minimum_orange: float,  # 0.0 < x < 100.0
 ) -> str:
-    rate = int(line_rate * 100)
+    rate = round(line_rate * 100)
 
     if rate >= minimum_green:
         color = "brightgreen"
