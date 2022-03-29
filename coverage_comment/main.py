@@ -20,7 +20,7 @@ from coverage_comment import (
 def main():
     logging.basicConfig(level="INFO")
 
-    log.info("Starting action - test1")
+    log.info("Starting action")
     config = settings.Config.from_environ(environ=os.environ)
     if config.VERBOSE:
         logging.getLogger().setLevel("DEBUG")
@@ -228,6 +228,7 @@ def save_badge(
         minimum_green=config.MINIMUM_GREEN,
         minimum_orange=config.MINIMUM_ORANGE,
     )
+    log.info("badge_info: %s" % badge_info)
     wiki.upload_file(
         github_token=config.GITHUB_TOKEN,
         repository=config.GITHUB_REPOSITORY,
