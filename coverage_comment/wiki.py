@@ -75,9 +75,15 @@ def get_file_contents(
         )
         #(dir / filename).write_text(contents)
         #git.add(str(filename))
-        file_contents = (dir / filename).read_text()
-        log.info("'%s' contents: %s" % (filename, file_contents))
-        return file_contents
+        try:
+            file_contents = (dir / filename).read_text()
+            log.info("'%s' contents: %s" % (filename, file_contents))
+            return file_contents
+        except FileNotFoundError:
+            log.warning("Previous coverage results not found, cannot report on evolution.")
+            log.debug("Exception while getting previous coverage data", exc_info=True)
+            return None
+
 
 
 #def get_file_contents(
