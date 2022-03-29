@@ -65,6 +65,7 @@ def action(
 
     if event_name in {"pull_request", "push"}:
         coverage = coverage_module.get_coverage_info(merge=config.MERGE_COVERAGE_FILES)
+        log.info("coverage_percent = %s" % coverage.info.percent_covered)
         if event_name == "pull_request":
             return generate_comment(
                 config=config,
