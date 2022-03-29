@@ -1,8 +1,8 @@
 ## Coverage report
 {% if previous_coverage_rate -%}
 The coverage rate went from `{{ previous_coverage_rate | pct }}` to `{{ coverage.info.percent_covered | pct }}` {{
-    ":arrow_up:" if round(previous_coverage_rate * 100) < round(coverage.info.percent_covered * 100) else
-    ":arrow_down:" if round(previous_coverage_rate * 100) > round(coverage.info.percent_covered * 100) else
+    ":arrow_up:" if previous_coverage_rate|pct  < coverage.info.percent_covered|pct else
+    ":arrow_down:" if previous_coverage_rate|pct > coverage.info.percent_covered|pct else
     ":arrow_right:"
 }}
 {%- else -%}
