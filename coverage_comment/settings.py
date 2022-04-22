@@ -36,6 +36,7 @@ class Config:
     MINIMUM_ORANGE: float = 70.0
     MERGE_COVERAGE_FILES: bool = False
     VERBOSE: bool = False
+    CWD: str = None
 
     # Clean methods
     @classmethod
