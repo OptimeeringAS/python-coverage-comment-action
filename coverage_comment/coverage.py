@@ -62,6 +62,8 @@ class DiffCoverage:
 
 def get_coverage_info(merge: bool) -> Coverage:
     try:
+        current_working_dir = subprocess.run("pwd")
+        log.info("Current Working Directory: %s", current_working_dir)
         if merge:
             subprocess.run("coverage", "combine")
 
