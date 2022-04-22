@@ -2,6 +2,7 @@ import dataclasses
 import datetime
 import json
 import pathlib
+import os
 import tempfile
 
 from coverage_comment import log, settings, subprocess
