@@ -69,7 +69,7 @@ def get_coverage_info(merge: bool) -> Coverage:
         log.info("Current Working Directory: %s", current_working_dir)
         cwd = None
         if CONFIG.CWD:
-            cwd = os.path.join(current_working_dir, CONFIG.CWD)
+            cwd = os.path.join(current_working_dir.strip(), CONFIG.CWD)
         if merge:
             subprocess.run("coverage", "combine")
 
