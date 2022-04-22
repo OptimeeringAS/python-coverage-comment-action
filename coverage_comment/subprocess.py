@@ -3,9 +3,6 @@ import os
 import subprocess
 from typing import Any
 
-from coverage_comment import settings
-
-CONFIG = settings.Config.from_environ(environ=os.environ)
 
 class SubProcessError(Exception):
     pass
@@ -16,16 +13,12 @@ class GitError(SubProcessError):
 
 
 def run(*args, **kwargs) -> str:
-    cwd = None
-    if CONFIG.CWD:
-        cwd = CONFIG.CWD
     try:
         return subprocess.run(
             args,
             text=True,
             check=True,
             capture_output=True,
-            cwd=cwd,
             **kwargs,
         ).stdout
     except subprocess.CalledProcessError as exc:

@@ -4,7 +4,9 @@ import json
 import pathlib
 import tempfile
 
-from coverage_comment import log, subprocess
+from coverage_comment import log, settings, subprocess
+
+CONFIG = settings.Config.from_environ(environ=os.environ)
 
 
 @dataclasses.dataclass
@@ -62,12 +64,15 @@ class DiffCoverage:
 
 def get_coverage_info(merge: bool) -> Coverage:
     try:
+        cwd = None
+        if CONFIG.CWD:
+            cwd = CONFIG.CWD
         current_working_dir = subprocess.run("pwd")
         log.info("Current Working Directory: %s", current_working_dir)
         if merge:
             subprocess.run("coverage", "combine")
 
-        json_coverage = subprocess.run("coverage", "json", "-o", "-")
+        json_coverage = subprocess.run("coverage", "json", "-o", "-", cwd=cwd)
     except subprocess.SubProcessError as exc:
         if "No source for code:" in str(exc):
             log.error(
