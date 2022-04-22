@@ -69,7 +69,8 @@ def get_coverage_info(merge: bool) -> Coverage:
         log.info("Current Working Directory: %s", current_working_dir)
         cwd = None
         if CONFIG.CWD:
-            cwd = os.path.join(current_working_dir.strip(), CONFIG.CWD)
+            #cwd = os.path.join(current_working_dir.strip(), CONFIG.CWD)
+            cwd = CONFIG.CWD
         if merge:
             subprocess.run("coverage", "combine")
 
@@ -175,8 +176,12 @@ def extract_info(data) -> Coverage:
 
 
 def get_diff_coverage_info(base_ref: str) -> DiffCoverage:
-    subprocess.run("git", "fetch", "--depth=1000")
-    subprocess.run("coverage", "xml")
+    cwd = None
+    if CONFIG.CWD:
+        #cwd = os.path.join(current_working_dir.strip(), CONFIG.CWD)
+        cwd = CONFIG.CWD
+    subprocess.run("git", "fetch", "--depth=1000", cwd=cwd)
+    subprocess.run("coverage", "xml", cwd=cwd)
     with tempfile.NamedTemporaryFile("r") as f:
         subprocess.run(
             "diff-cover",
@@ -185,6 +190,7 @@ def get_diff_coverage_info(base_ref: str) -> DiffCoverage:
             f"--json-report={f.name}",
             "--diff-range-notation=..",
             "--quiet",
+            cwd=cwd,
         )
         diff_json = json.loads(pathlib.Path(f.name).read_text())
 
