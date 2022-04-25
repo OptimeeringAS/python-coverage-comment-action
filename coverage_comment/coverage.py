@@ -190,7 +190,7 @@ def get_diff_coverage_info(base_ref: str) -> DiffCoverage:
             f"--json-report={f.name}",
             "--diff-range-notation=..",
             "--quiet",
-    #        cwd=cwd,
+            cwd=cwd,
         )
         diff_json = json.loads(pathlib.Path(f.name).read_text())
 
