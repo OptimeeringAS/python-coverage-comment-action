@@ -190,14 +190,15 @@ def get_diff_coverage_info(base_ref: str) -> DiffCoverage:
             f"--json-report={f.name}",
             "--diff-range-notation=..",
             "--quiet",
-            cwd=cwd,
+    #        cwd=cwd,
         )
         diff_json = json.loads(pathlib.Path(f.name).read_text())
 
-    return extract_diff_info(diff_json)
+
+    return extract_diff_info(diff_json, cwd)
 
 
-def extract_diff_info(data) -> DiffCoverage:
+def extract_diff_info(data, cwd) -> DiffCoverage:
     """
     {
         "report_name": "XML",
@@ -215,6 +216,12 @@ def extract_diff_info(data) -> DiffCoverage:
         "num_changed_lines": 39,
     }
     """
+    converted_data = []
+    for path, file_data in data["src_stats"].items():
+        if cwd and path.startswith(cwd):
+            path = path[len(cwd + "/"):]
+        converted_data.append((path, file_data))
+
     return DiffCoverage(
         total_num_lines=data["total_num_lines"],
         total_num_violations=data["total_num_violations"],
@@ -226,6 +233,7 @@ def extract_diff_info(data) -> DiffCoverage:
                 percent_covered=file_data["percent_covered"] / 100,
                 violation_lines=file_data["violation_lines"],
             )
-            for path, file_data in data["src_stats"].items()
+            for path, file_data in converted_data
+            #for path, file_data in data["src_stats"].items()
         },
     )
