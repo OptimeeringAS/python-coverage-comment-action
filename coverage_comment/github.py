@@ -136,4 +136,4 @@ def post_comment(
 
 def set_output(**kwargs: bool) -> None:
     for key, value in kwargs.items():
-        print(f"::set-output name={key}::{json.dumps(value)}")
+        print(f"{key}={json.dumps(value)} >> $GITHUB_OUTPUT")

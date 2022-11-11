@@ -130,7 +130,7 @@ def test_action__pull_request__store_comment(
         in comment
     )
 
-    expected_stdout = "::set-output name=COMMENT_FILE_WRITTEN::true"
+    expected_stdout = "COMMENT_FILE_WRITTEN=true >> $GITHUB_OUTPUT"
     assert capsys.readouterr().out.strip() == expected_stdout
 
 
@@ -177,7 +177,7 @@ def test_action__pull_request__post_comment(
     assert not pathlib.Path("python-coverage-comment-action.txt").exists()
     assert "The coverage rate went from `30%` to `86%` :arrow_up:" in comment
 
-    expected_stdout = "::set-output name=COMMENT_FILE_WRITTEN::false"
+    expected_stdout = "COMMENT_FILE_WRITTEN=false >> $GITHUB_OUTPUT"
     assert capsys.readouterr().out.strip() == expected_stdout
 
 

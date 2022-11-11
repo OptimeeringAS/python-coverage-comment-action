@@ -236,4 +236,4 @@ def test_post_comment__update(gh, session, get_logs):
 def test_set_output(capsys):
     github.set_output(foo=True)
     captured = capsys.readouterr()
-    assert captured.out.strip() == "::set-output name=foo::true"
+    assert captured.out.strip() == "foo=true >> $GITHUB_OUTPUT"
